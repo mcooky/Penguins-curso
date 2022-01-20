@@ -1,0 +1,129 @@
+---
+title: "Proyect Pinguins"
+author: "Alberto Cook Calvete"
+date: "15/1/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Palmeguins#
+
+```{r}
+
+
+#install.packages("palmerpenguins")
+library(palmerpenguins)
+data(package = 'palmerpenguins')
+
+
+
+```
+
+##Pregunta 1:Número de individuos totales, masculinos y femeninos por especie. La media, desviación estándar, valor mínimo y máximo de la longitud y profundidad del pico, la longitud de la aleta y el tamaño##
+
+```{r}
+#install.packages('tidyverse')                   
+library(tidyverse)  
+library(dplyr)
+
+#install.packages("palmerpenguins")
+library(palmerpenguins)
+data(penguins)
+
+
+male.sp <- penguins %>% 
+  select(species,sex) %>% 
+  filter(sex == "male")
+
+
+female.sp <- penguins %>% 
+  select(species, sex) %>% 
+  filter(sex == "female")
+
+summary(male.sp)
+summary(female.sp)
+
+table(penguins$species,penguins$sex)
+
+
+mean(penguins$bill_depth_mm, na.rm = TRUE)
+mean(penguins$bill_length_mm, na.rm = TRUE)  
+mean(penguins$flipper_length_mm, na.rm = TRUE)
+mean(penguins$body_mass_g, na.rm = TRUE)
+
+sd(penguins$bill_depth_mm, na.rm = TRUE)
+sd(penguins$bill_length_mm, na.rm = TRUE)  
+sd(penguins$flipper_length_mm, na.rm = TRUE)
+sd(penguins$body_mass_g, na.rm = TRUE)
+
+max(penguins$bill_depth_mm, na.rm = TRUE)
+max(penguins$bbill_length_mm, na.rm = TRUE)  
+max(penguins$bflipper_length_mm, na.rm = TRUE)
+max(penguins$body_mass_g, na.rm = TRUE)
+
+min(penguins$bill_depth_mm, na.rm = TRUE)
+min(penguins$bill_length_mm, na.rm = TRUE)  
+min(penguins$flipper_length_mm, na.rm = TRUE)
+min(penguins$body_mass_g, na.rm = TRUE)
+
+
+
+
+
+```
+
+##Pregunta 2: Un gráfico de barras que represente el número de individuos muestreados de cada especie en cada isla, representando las especies en diferentes colores (chinstrap – morado, gentoo – azul, adelie – naranja). Contesta a las siguientes preguntas: ¿qué especie se ha muestreado en las tres islas? ¿cuántos individuos se han muestreado de la isla Dream?##
+
+```{r}
+
+ggplot(data = penguins) + 
+  geom_bar(aes(x = island, fill = species),
+           position = "dodge") #esquivar
+
+table(penguins$island)
+
+#¿qué especie se ha muestreado en las tres islas? 
+#Adelie
+#¿cuántos individuos se han muestreado de la isla Dream?
+#124
+
+```
+
+##Pregunta 3:Un gráfico multipanel de cajas y bigotes del tamaño de los pingüinos según su sexo, donde aparezca un panel para cada especie. Contesta a las siguientes preguntas: ¿qué especie tiene mayor tamaño? ¿en qué especie las hembras y los machos tienen un tamaño más similar?##
+
+```{r}
+
+ 
+miplot1 <- ggplot(data = penguins) + 
+  geom_boxplot(aes(x =sex, y = body_mass_g))
+
+
+miplot1 +
+  facet_grid(rows = vars(species), scales = "free")
+
+
+ggplot(data = penguins) +
+geom_boxplot(aes(x = species, y= body_mass_g, fill = sex)) 
+
+
+#¿qué especie tiene mayor tamaño? ¿en qué especie las hembras y los machos tienen un tamaño más similar?
+#gentoo
+
+#¿en qué especie las hembras y los machos tienen un tamaño más similar?
+#Chinstrap
+
+
+```
+
+
+
+
+
+
+
+
+
+
